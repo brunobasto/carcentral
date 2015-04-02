@@ -25,27 +25,27 @@ public class LookForWifiIntentService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		
+		WifiManager wifiManager = (WifiManager)getSystemService(Context.WIFI_SERVICE);
 
-		registerPowerReceiver();
-		registerWifiReceiver();
+		registerPowerReceiver(wifiManager);
+		registerWifiReceiver(wifiManager);
 	}
 
-	protected void registerPowerReceiver() {
-		BatteryStatusReceiver batteryStatusReceiver = new BatteryStatusReceiver();
+	protected void registerPowerReceiver(WifiManager wifiManager) {
+		BatteryStatusReceiver batteryStatusReceiver = new BatteryStatusReceiver(wifiManager);
 
 		registerReceiver(batteryStatusReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 	}
 
-	protected void registerWifiReceiver() {
-		WifiManager wifi = (WifiManager)getSystemService(Context.WIFI_SERVICE);
-
-		if (wifi.isWifiEnabled() == false) {
-            wifi.setWifiEnabled(true);
+	protected void registerWifiReceiver(WifiManager wifiManager) {
+		if (wifiManager.isWifiEnabled() == false) {
+			wifiManager.setWifiEnabled(true);
         }
 
-		registerReceiver(new WifiBroadcastReceiver(wifi), new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+		registerReceiver(new WifiBroadcastReceiver(wifiManager), new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 
-		wifi.startScan();
+		wifiManager.startScan();
 	}
 
 	@Override

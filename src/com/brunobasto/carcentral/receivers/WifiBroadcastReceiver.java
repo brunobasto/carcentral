@@ -16,8 +16,8 @@ import android.util.Log;
 
 public class WifiBroadcastReceiver extends BroadcastReceiver {
 
-	public WifiBroadcastReceiver(WifiManager wifi) {
-		_wifi = wifi;
+	public WifiBroadcastReceiver(WifiManager wifiManager) {
+		_wifiManager = wifiManager;
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class WifiBroadcastReceiver extends BroadcastReceiver {
 			return;
 		}
 
-		List<ScanResult> results = _wifi.getScanResults();
+		List<ScanResult> results = _wifiManager.getScanResults();
 
 		for (ScanResult result : results) {
 			if (result.SSID.equals("Liferay8F")) {
@@ -46,7 +46,7 @@ public class WifiBroadcastReceiver extends BroadcastReceiver {
 			}
 		}
 
-		_wifi.startScan();
+		_wifiManager.startScan();
 	}
 	
 	protected boolean isAppRunning(Context context, String className) {
@@ -79,6 +79,6 @@ public class WifiBroadcastReceiver extends BroadcastReceiver {
 		return powerPlugged.booleanValue();
 	}
 
-    private WifiManager _wifi;
+    private WifiManager _wifiManager;
 
 }
