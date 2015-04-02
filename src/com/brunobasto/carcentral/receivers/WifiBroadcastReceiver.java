@@ -1,9 +1,9 @@
-package com.brunobasto.backupcam.receivers;
+package com.brunobasto.carcentral.receivers;
 
 import java.util.List;
 
-import com.brunobasto.backupcam.activities.MainActivity;
-import com.brunobasto.backupcam.globals.PropertyUtil;
+import com.brunobasto.carcentral.activities.MainActivity;
+import com.brunobasto.carcentral.globals.PropertyUtil;
 
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningAppProcessInfo;

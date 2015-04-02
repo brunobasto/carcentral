@@ -1,5 +1,5 @@
 /** Automatically generated file. DO NOT MODIFY */
-package com.brunobasto.backupcam;
+package com.brunobasto.carcentral;
 
 public final class BuildConfig {
     public final static boolean DEBUG = true;

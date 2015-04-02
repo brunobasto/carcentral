@@ -1,4 +1,4 @@
-package com.brunobasto.backupcam.activities;
+package com.brunobasto.carcentral.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,8 +7,8 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.brunobasto.backupcam.R;
-import com.brunobasto.backupcam.services.LookForWifiIntentService;
+import com.brunobasto.carcentral.R;
+import com.brunobasto.carcentral.services.LookForWifiIntentService;
 
 public class MainActivity extends Activity {
 	

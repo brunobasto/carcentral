@@ -1,4 +1,4 @@
-package com.brunobasto.backupcam.globals;
+package com.brunobasto.carcentral.globals;
 
 import java.util.HashMap;
 import java.util.Map;

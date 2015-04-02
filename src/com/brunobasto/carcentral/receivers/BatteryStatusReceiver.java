@@ -1,11 +1,11 @@
-package com.brunobasto.backupcam.receivers;
+package com.brunobasto.carcentral.receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.BatteryManager;
 
-import com.brunobasto.backupcam.globals.PropertyUtil;
+import com.brunobasto.carcentral.globals.PropertyUtil;
 
 public class BatteryStatusReceiver extends BroadcastReceiver {
 

@@ -1,10 +1,10 @@
-package com.brunobasto.backupcam.receivers;
+package com.brunobasto.carcentral.receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.brunobasto.backupcam.services.LookForWifiIntentService;
+import com.brunobasto.carcentral.services.LookForWifiIntentService;
 
 public class AutoStartReceiver extends BroadcastReceiver {
 
