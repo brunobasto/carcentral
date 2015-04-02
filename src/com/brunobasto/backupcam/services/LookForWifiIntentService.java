@@ -6,6 +6,7 @@ import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
 
+import com.brunobasto.backupcam.receivers.BatteryStatusReceiver;
 import com.brunobasto.backupcam.receivers.WifiBroadcastReceiver;
 
 
@@ -25,7 +26,18 @@ public class LookForWifiIntentService extends Service {
 	public void onCreate() {
 		super.onCreate();
 
-		wifi = (WifiManager)getSystemService(Context.WIFI_SERVICE);
+		registerPowerReceiver();
+		registerWifiReceiver();
+	}
+
+	protected void registerPowerReceiver() {
+		BatteryStatusReceiver batteryStatusReceiver = new BatteryStatusReceiver();
+
+		registerReceiver(batteryStatusReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+	}
+
+	protected void registerWifiReceiver() {
+		WifiManager wifi = (WifiManager)getSystemService(Context.WIFI_SERVICE);
 
 		if (wifi.isWifiEnabled() == false) {
             wifi.setWifiEnabled(true);
@@ -40,7 +52,5 @@ public class LookForWifiIntentService extends Service {
 	public void onDestroy() {
 		super.onDestroy();
 	}
-
-	private WifiManager wifi;
 
 }

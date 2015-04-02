@@ -2,6 +2,9 @@ package com.brunobasto.backupcam.receivers;
 
 import java.util.List;
 
+import com.brunobasto.backupcam.activities.MainActivity;
+import com.brunobasto.backupcam.globals.PropertyUtil;
+
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningAppProcessInfo;
 import android.content.BroadcastReceiver;
@@ -19,20 +22,22 @@ public class WifiBroadcastReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
+		if (!isPowerPlugged()) {
+			Log.i("WifiBroadcastReceiver", "Power not plugged. Going to sleep.");
+			
+			return;
+		}
+
 		List<ScanResult> results = _wifi.getScanResults();
 
 		for (ScanResult result : results) {
 			if (result.SSID.equals("Liferay8F")) {
-				Log.i("WifiBroadcastReceiver", "Found Liferay*F");
+				Log.i("WifiBroadcastReceiver", "Found Liferay8F");
 
-				String appName = "com.waze";
+				if (!isAppRunning(context, MainActivity.class.getName())) {
+					Log.i("WifiBroadcastReceiver", "Opening local activity.");
 
-				if (!isAppRunning(context, appName)) {
-					Log.i("WifiBroadcastReceiver", "Opening app.");
-
-					Intent appIntent = new Intent();
-
-					appIntent.setPackage(appName);
+					Intent appIntent = new Intent(context, MainActivity.class);
 
 					appIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
@@ -43,8 +48,8 @@ public class WifiBroadcastReceiver extends BroadcastReceiver {
 
 		_wifi.startScan();
 	}
-
-	protected boolean isAppRunning(Context context, String appName) {
+	
+	protected boolean isAppRunning(Context context, String className) {
 		ActivityManager activityManager = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
 
 		List<RunningAppProcessInfo> procInfos = activityManager.getRunningAppProcesses();
@@ -53,8 +58,8 @@ public class WifiBroadcastReceiver extends BroadcastReceiver {
         	RunningAppProcessInfo app = procInfos.get(i);
 
         	String name = app.processName;
-
-            if ((name.indexOf(appName) == 0) &&
+        	
+            if ((className.indexOf(name) == 0) &&
             	app.importance == RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
 
             	return true;
@@ -62,6 +67,16 @@ public class WifiBroadcastReceiver extends BroadcastReceiver {
         }
 
         return false;
+	}
+
+	protected boolean isPowerPlugged() {
+		Boolean powerPlugged = (Boolean)PropertyUtil.getProperty("power.plugged");
+
+		if (powerPlugged == null) {
+			return false;
+		}
+
+		return powerPlugged.booleanValue();
 	}
 
     private WifiManager _wifi;
